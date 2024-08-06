@@ -77,13 +77,10 @@ ggplot(aes(x = date, y = Score, color = provider))+
   ylab("Rating")+
   xlab("")+
   theme_classic()+
-  theme(legend.position = "bottom") 
+  theme(legend.position = "bottom") -> p
 
 
-ggsave("rating_history.png", device='tiff', dpi=300, units = "px", limitsize = F)
+ggsave("rating_history.jpg", dpi=200, units = "px", limitsize = F)
 
   
-  
-
-
 ```
