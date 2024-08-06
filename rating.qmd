@@ -59,6 +59,8 @@ combine(moodys, fc, sp, ri, jc)-> rating_all
 ```{r}
 # Visualize
 
+tiff("test.tiff", units="in", width=5, height=5, res=300)
+
 rating_all %>%
 ggplot(aes(x = date, y = Score, color = provider))+
   # annotate("rect", xmin = min(rating_all$date), xmax = max(rating_all$date), ymin = 11, ymax = Inf, fill = "lightblue")+
@@ -75,7 +77,11 @@ ggplot(aes(x = date, y = Score, color = provider))+
   ylab("Rating")+
   xlab("")+
   theme_classic()+
-  theme(legend.position = "bottom")
+  theme(legend.position = "bottom") 
+
+
+ggsave("rating_history.png", device='tiff', dpi=300, units = "px", limitsize = F)
+
   
   
 
