@@ -1,0 +1,71 @@
+---
+title: "Rating"
+format: pdf
+editor: visual
+---
+
+## Rating History
+
+```{r}
+library(readxl)
+library(dplyr)
+library(ggplot2)
+library(gghighlight)
+library(plotly)
+
+
+raw_data <- read_xlsx("rating_tidy.xlsx", sheet = "tidy_data")
+
+scale <- read_excel("rating_tidy.xlsx", sheet = "scale") 
+
+#Moodys combined with score
+rat_mood <-raw_data %>% filter(provider == "Moody's")
+scale_mood <- scale %>% select(MOODYS, Score) %>% rename(rating = MOODYS)
+
+moodys <- left_join(rat_mood, scale_mood)
+
+#SP combined with score
+rat_sp <-raw_data %>% filter(provider == "Standard & Poor's")
+scale_sp <- scale %>% select(SP, Score) %>% rename(rating = SP)
+
+sp <- left_join(rat_sp, scale_sp)
+
+#Fitch combined with score
+rat_fc <-raw_data %>% filter(provider == "Fitch")
+scale_fc <- scale %>% select(Fitch, Score) %>% rename(rating = Fitch)
+
+fc <- left_join(rat_fc, scale_fc)
+
+#R&I combined with score
+rat_ri <-raw_data %>% filter(provider == "Rating and Investment")
+scale_ri <- scale %>% select('R&I', Score) %>% rename(rating = 'R&I')
+
+ri <- left_join(rat_ri, scale_ri)
+
+#JCRA combined with score
+rat_jc <-raw_data %>% filter(provider == "Japan Credit Rating Agency")
+scale_jc <- scale %>% select('JCRA', Score) %>% rename(rating = 'JCRA')
+
+jc <- left_join(rat_jc, scale_jc)
+
+#Combine all
+combine(moodys, fc, sp, ri, jc)-> rating_all
+
+
+
+```
+
+```{r}
+# Visualize
+rating_all %>% 
+ggplot(aes(x = date, y = Score, color = provider 
+           ))+
+  geom_line(size = 1.2, alpha = 0.7)+
+  gghighlight(provider == c("Rating and Investment", "Japan Credit Rating Agency"))+
+  theme_classic()+
+  ylab("Rating")+
+  scale_y_continuous(breaks=c(0, 5, 10, 13),
+                     labels=c("C/SD", "B-", "BB+", "BBB+"))
+
+
+```
