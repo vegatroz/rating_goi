@@ -9,5 +9,3 @@ Currently, the Republic receives solicited rating from 5 Agencies: Standard & Po
 -   Fullset data (1994-current) can be found in [rating_tidy.xlsx](https://github.com/vegatroz/rating_goi/blob/master/rating_tidy.xlsx)
 
 -   R script to produce historical rating chart is available in [Qmd](https://github.com/vegatroz/rating_goi/blob/master/rating.qmd)
-
-The highest rating provider is highlighted red on the chart.
