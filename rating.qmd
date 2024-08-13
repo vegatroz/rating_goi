@@ -84,3 +84,34 @@ ggsave("rating_history.jpg", dpi=200, units = "px", limitsize = F)
 
   
 ```
+
+```{r}
+
+### Plot for BUKU SAKU Utang
+tiff("test.tiff", units="in", width=4, height=2, res=300)
+
+rating_all %>% filter(year(date) > 2004) %>% 
+ggplot(aes(x = date, y = Score, color = provider))+
+  # annotate("rect", xmin = min(rating_all$date), xmax = max(rating_all$date), ymin = 11, ymax = Inf, fill = "lightblue")+
+  #color area Investment grade
+   # geom_rect(inherit.aes = F, xmin = 0, xmax = Inf, ymin = 11, ymax = Inf, fill = "lightblue", color = "transparent", alpha = 0.1)+
+  
+  scale_y_continuous(breaks=c(0, 5, 10, 13),
+                     labels=c("C/SD", "B-", "BB+", "BBB+"))+
+  geom_line(size = 1)+
+  geom_point(size = 1.8)+
+  geom_hline(yintercept = 11, linetype = "dashed", alpha = 0.5)+
+  # gghighlight(provider == "Rating and Investment", unhighlighted_colour = "lightgrey", line_label_type = "ggrepel_label")+
+  annotate("text", label ="INVESTMENT GRADE",  x = median(rating_all$date), y = 11.5)+
+  ylab("Affirmed Rating")+
+  xlab("")+
+  theme_classic()+
+  theme(legend.position = "inside",
+        legend.position.inside = c(1,0.15),
+        legend.justification = "right") +
+  guides(color = guide_legend(nrow = 2, title = "")) -> p
+
+
+
+ggsave("rating_history.jpg", dpi=300, units = "px", limitsize = F)
+```
