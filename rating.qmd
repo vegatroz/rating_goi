@@ -108,7 +108,11 @@ ggplot(aes(x = date, y = Score, color = provider))+
   theme_classic()+
   theme(legend.position = "inside",
         legend.position.inside = c(1,0.15),
-        legend.justification = "right") +
+        legend.justification = "right",
+        axis.text=element_text(size=14),
+        legend.text=element_text(size=8.5),
+        axis.title=element_text(size=14)
+        ) +
   guides(color = guide_legend(nrow = 2, title = "")) -> p
 
 
